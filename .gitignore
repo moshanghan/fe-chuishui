@@ -1,8 +1,8 @@
 dist
 node_modules
 .idea
-index.html
+.html
 .nojekyll
 _navbar.md
 _sidebar.md
-*.img
+/img
