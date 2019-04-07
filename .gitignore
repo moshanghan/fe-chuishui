@@ -1,7 +1,7 @@
 dist
 node_modules
 .idea
-.html
+index.html
 .nojekyll
 _navbar.md
 _sidebar.md
