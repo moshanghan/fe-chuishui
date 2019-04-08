@@ -10,7 +10,7 @@
 >**线性时间非比较类排序**：不通过比较来决定元素间的相对次序，它可以突破基于比较排序的时间下界，以线性时间运行，因此称为线性时间非比较类排序。 
 
 0.2 算法复杂度
-<img src="../img/ms/sortTable.png" >
+<img src="img/ms/sortTable.png" >
 0.3 相关概念
 >**稳定**：如果a原本在b前面，而a=b，排序之后a仍然在b的前面。  
 >**不稳定**：如果a原本在b的前面，而a=b，排序之后 a 可能会出现在 b 的后面。  
@@ -19,7 +19,7 @@
 
 
 ##  1、冒泡排序（Bubble Sort）
-<img src="../img/ms/1.gif" >  
+<img src="img/ms/1.gif" >  
 ```javascript
     const ARR = [3, 5, 8, 0, 12, 87, 45]
 
@@ -39,7 +39,7 @@
     console.log(bubbleSort(ARR))//=>[0, 3, 5, 8, 12, 45, 87]
 ```
 ##  2、选择排序（Selection Sort）
-<img src="../img/ms/2.gif" >  
+<img src="img/ms/2.gif" >  
 ```javascript
     const ARR = [3, 5, 8, 0, 12, 87, 45]
 
@@ -62,7 +62,7 @@
     console.log(selectionSort(ARR))//=>[0, 3, 5, 8, 12, 45, 87]
 ```
 ##  3、插入排序（Insertion Sort）
-<img src="../img/ms/3.gif" >  
+<img src="img/ms/3.gif" >  
 ```javascript
     const ARR = [3, 5, 8, 0, 12, 87, 45]
 
@@ -83,7 +83,7 @@
     
 ```
 ##  4、希尔排序（Shell Sort）
-<img src="../img/ms/4.gif" >  
+<img src="img/ms/4.gif" >  
 ```javascript
     const ARR = [3, 5, 8, 0, 12, 87, 45]
 
@@ -109,7 +109,7 @@
     console.log(shellSort(ARR))//=>[0, 3, 5, 8, 12, 45, 87]
 ```
 ##  5、归并排序（Merge Sort）
-<img src="../img/ms/5.gif" >  
+<img src="img/ms/5.gif" >  
 ```javascript
     const ARR = [3, 5, 8, 0, 12, 87, 45]
 
@@ -146,7 +146,7 @@
     console.log(mergeSort(ARR));//=>[0, 3, 5, 8, 12, 45, 87]
 ```
 ##  6、快速排序（Quick Sort）
-<img src="../img/ms/6.gif" >  
+<img src="img/ms/6.gif" >  
 ```javascript
     const ARR = [3, 5, 8, 0, 12, 87, 45]
 
@@ -172,7 +172,7 @@
     console.log(quickSort(ARR));//=>[0, 3, 5, 8, 12, 45, 87]
 ```
 ##  7、堆排序（Heap Sort）
-<img src="../img/ms/7.gif" >  
+<img src="img/ms/7.gif" >  
 ```javascript
     const ARR = [3, 5, 8, 0, 12, 87, 45]
 
@@ -215,7 +215,7 @@
     console.log(heapSort(ARR));//=>[0, 3, 5, 8, 12, 45, 87]
 ```
 ##  8、计数排序（Counting Sort）
-<img src="../img/ms/8.gif" >  
+<img src="img/ms/8.gif" >  
 ```javascript
     const ARR = [3, 5, 8, 0, 12, 87, 45]
 
@@ -243,7 +243,7 @@
     console.log(countingSort(ARR));//=>[0, 3, 5, 8, 12, 45, 87]
 ```
 ##  9、桶排序（Bucket Sort）
-<img src="../img/ms/9.png" >  
+<img src="img/ms/9.png" >  
 ```javascript
     const ARR = [3, 5, 8, 0, 12, 87, 45]
 // @param array 数组
@@ -294,7 +294,7 @@
     console.log(bucketSort(ARR,6));//=>[0, 3, 5, 8, 12, 45, 87]
 ```
 ##  10、基数排序（Radix Sort）
-<img src="../img/ms/10.gif" >  
+<img src="img/ms/10.gif" >  
 ```javascript
     const ARR = [3, 5, 8, 0, 12, 87, 45]
 

@@ -1,0 +1,280 @@
+本文转载自[前端面试CSS 相关问题](https://github.com/paddingme/Front-end-Web-Development-Interview-Question/blob/master/questions/6.md)     
+原文作者： PaddingMe   
+
+* Q：描述下 “reset” CSS 文件的作用和使用它的好处。
+
+  A：
+    - 作用以及好处：因为各个浏览器默认对CSS的渲染有差异，"reset" CSS 通过重新定义标签样式，对浏览器进行默认样式“清零”重置，样式保持一致。
+    - 不足:
+      + css文件大小增加；
+      + 许多样式本身就需要重置，多此一举；
+      + 增加浏览器对CSS 的渲染。
+
+    可以阅读以下文章增强了解：
+    - [CSS reset的重新审视 – 避免样式重置](http://www.zhangxinxu.com/wordpress/2010/04/css-reset%E7%9A%84%E9%87%8D%E6%96%B0%E5%AE%A1%E8%A7%86-%E9%81%BF%E5%85%8D%E6%A0%B7%E5%BC%8F%E9%87%8D%E7%BD%AE/)
+    - [常见标签的默认属性值及相互作用——关于CSS reset的思考](http://www.cnblogs.com/dolphinx/p/3509515.html)
+    - [reset.css](http://baike.baidu.com/view/5186496.htm)
+    - [前端面试问题](http://handyxuefeng.blog.163.com/blog/static/454521722013111714040259/)
+
+* Q: 解释下浮动和它的工作原理。
+
+  A: 浮动出现的最开始出现的意义是用来让文字环绕图片而已。`float`可以自动包裹元素。`float`会导致高度塌陷。`float`为什么会导致高度塌陷：元素含有浮动属性 –> 破坏`inline box` –> 破坏`line box`高度 –> 没有高度 –> 塌陷。什么时候会塌陷：当标签里面的元素只要样子没有实际高度时会塌陷。浮动会脱离文档流。产生自己的块级格式化上下文。
+
+    可以阅读以下文章增加理解：
+    - [CSS float浮动的深入研究、详解及拓展(一)](http://www.zhangxinxu.com/wordpress/2010/01/css-float%E6%B5%AE%E5%8A%A8%E7%9A%84%E6%B7%B1%E5%85%A5%E7%A0%94%E7%A9%B6%E3%80%81%E8%AF%A6%E8%A7%A3%E5%8F%8A%E6%8B%93%E5%B1%95%E4%B8%80/)
+    - [CSS float浮动的深入研究、详解及拓展(二)](http://www.zhangxinxu.com/wordpress/2010/01/css-float%E6%B5%AE%E5%8A%A8%E7%9A%84%E6%B7%B1%E5%85%A5%E7%A0%94%E7%A9%B6%E3%80%81%E8%AF%A6%E8%A7%A3%E5%8F%8A%E6%8B%93%E5%B1%95%E4%BA%8C/)
+    - [那些年我们一起清除过的浮动](http://www.iyunlu.com/view/css-xhtml/55.html)
+    - 《CSS权威指南》
+
+* 列举不同的清除浮动的技巧，并指出它们各自适用的使用场景。
+
+  + 直接把```<div style="clear:both;"></div>```放到当作最后一个子标签放到父标签那儿，此方法兼容性强，使用方便，但是浪费了一个标签，而且只能使用一次，而且有时候如果不注意中间多了个空格会产生一段空白高度。
+    - 优点：通俗易懂，容易掌握；
+    - 缺点：可以想象通过此方法，会添加多少无意义的空标签，有违结构与表现的分离，在后期维护中将是噩梦。
+  + 如下:
+
+    ```
+    .clearfix{overflow:hidden; zoom:1;}
+    ```
+    此方法优点在于代码简洁，涵盖所有浏览器，可是对于`overflow:hidden;`要是里面的元素要是想来个`margin`负值定位或是负的绝对定位，岂不是直接被裁掉了，所以此方法是有不小的局限性的。
+    - 优点：不存在结构和语义化问题，代码量极少；
+    - 缺点：内容增多时候容易造成不会自动换行导致内容被隐藏掉，无法显示需要溢出的元素。
+  + 如下：
+
+    ```css
+    .fix{zoom:1;}
+    .fix:after{
+        display:block;
+        content:'.';
+        clear:both;
+        line-height:0;
+        visibility:hidden;}
+    ```
+
+    `line-height:0`写成`height:0`也是可以的。不会影响任何其他样式，通用性强，覆盖面广，我很推荐哦。
+  + 父元素也浮动：
+    - 优点：不存在结构和语义化问题，代码量极少
+    - 缺点：使得与父元素相邻的元素的布局会受到影响，不可能一直浮动到body，不推荐使用
+
+  总结：
+    + 其一，通过在浮动元素的末尾添加一个空元素，设置 `clear：both`属性，`after`伪元素其实也是通过 `content` 在元素的后面生成了内容为一个点的块级元素；
+    + 其二，通过设置父元素 `overflow` 或者`display：table` 属性来闭合浮动，这里的原理涉及到BFC，不再赘述。
+
+   同样请参考上一题给出的参考文章进行阅读加以理解。
+
+
+* Q: 解释下 CSS sprites，以及你要如何在页面或网站中使用它。
+
+  A: CSS Sprites就是把网页中一些小图片整合到一张图片文件中，再利用CSS的`background-image`，`background- repeat`，`background-position`的组合进行背景定位，`background-position`可以用数字能精确的定位出背景图片的位置。可以减少http请求。
+
+
+* Q: 你最喜欢的图片替换方法是什么，你如何选择使用。
+
+  A:
+    - 一些图标是使用before和after伪元素;
+    - 还有一些使用iconfont;
+    - 使用sprite图;
+    - 用背景图片代替图片。
+
+    举个栗子：
+
+    ```html
+      <h1 class="nir">[content]</h1>
+    ```
+
+    ```css
+    .nir {
+       height: 100px; /* height of replacement image */
+       padding: 0;
+       margin: 0;
+       overflow: hidden;
+    }
+
+    .nir:before {
+         content: url(image.gif);
+         display: block;
+      }
+    ```
+
+    详细可阅读：[CSS image replacement with pseudo-elements](http://nicolasgallagher.com/css-image-replacement-with-pseudo-elements/)
+
+* Q：讨论CSS hacks，条件引用或者其他。
+
+  A: CSS主要由三种方法：
+
+    - 属性前缀法(即类内部Hack)：例如 IE6能识别下划线"\_"和星号" \* "，IE7能识别星号" \* "，但不能识别下划线"\_"，IE6~IE10都认识"\9"，但firefox前述三个都不能认识。
+    - 选择器前缀法(即选择器Hack)：例如 IE6能识别`*html .class{}`，IE7能识别`*+html .class{}`或者`*:first-child+html .class{}`。
+    - IE条件注释法(即HTML条件注释Hack)：针对所有IE(注：IE10+已经不再支持条件注释)： <!--[if IE]>IE浏览器显示的内容 <![endif]-->，针对IE6及以下版本： <!--[if lt IE 6]>只在IE6-显示的内容 <![endif]-->。这类Hack不仅对CSS生效，对写在判断语句里面的所有代码都会生效。
+
+    ```html
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Css Hack</title>
+        <style>
+        #test
+        {
+            width:300px;
+            height:300px;
+
+            background-color:blue;      /*firefox*/
+            background-color:red\9;      /*all ie*/
+            background-color:yellow\0;    /*ie8*/
+            +background-color:pink;        /*ie7*/
+            _background-color:orange;       /*ie6*/
+        }
+        :root #test { background-color:purple\9; }  /*ie9*/
+        @media all and (min-width:0px){ #test {background-color:black\0;} }  /*opera*/
+        @media screen and (-webkit-min-device-pixel-ratio:0){ #test {background-color:gray;} }  /*chrome and safari*/
+        </style>
+    </head>
+    <body>
+        <div id="test">test</div>
+    </body>
+    </html>
+    ```
+
+  想要更多的了解CSS hack 方面的知识可以参考：
+
+    - [史上最全的CSS hack方式一览](http://blog.csdn.net/freshlover/article/details/12132801)
+    - [史上最全的css hack](http://www.cnblogs.com/wuqiang/archive/2011/08/23/2150240.html)
+
+* Q: 如何为有功能限制的浏览器提供网页？
+  * Q: 你会使用哪些技术和处理方法？
+
+   A: 功能限制的浏览器，比如 IE 低版本、手机浏览器、奇葩国内浏览器，会在很多功能上不符合 Web 标准，而应对的方式有这么几种：
+
+    - 只提供符合 Web 标准的页面；
+    - 提供另一个符合那些浏览器标准的页面(例如说移动端一套css,电脑端一套css);
+    - 兼容：这里有两种思路，一个是渐进增强，一个优雅降级。
+      渐进增强的思路就是提供一个可用的原型，后来再为高级浏览器提供优化。优雅降级的思路是根据高级浏览器提供一个版本，然后有功能限制的浏览器只需要一个刚好能用的版本。当然，工作中的标准都是尽量满足设计，如果不能满足的话就尽量贴近，不得已（性能之类的问题）才会砍掉某个浏览器版本上的需求。
+
+    相关技术:
+    - Media Query
+    - CSS hack
+    - 条件判断 `<!--[if !IE]><!-->除IE外都可识别 <!--<![endif]-->`
+
+* Q： 有哪些的隐藏内容的方法（如果同时还要保证屏幕阅读器可用呢？）
+
+  A: `display:none`看不见也摸不着，屏幕阅读器更会忽略其内容；而`visibility:hidden`虽然看得见但是摸不着，占据了一定的物理空间，屏幕阅读器也会忽略。如果想要在读屏设备中让这些内容可见。解决方案的基本思路都是将这些内容放到屏幕、视线意外的地方，或者就是将大小设置成 0。比如 `text-indent: -9999em;`、`overflow: hidden;`、`height: 0`。
+
+    ```css
+      .texthidden {
+        display:block;/*统一转化为块级元素*/
+        overflow: hidden;
+        width: 0;
+        height: 0;
+       }
+    ```
+  更详细的方法可以参考这篇文章[HIDING CONTENT FOR ACCESSIBILITY](http://snook.ca/archives/html_and_css/hiding-content-for-accessibility)
+
+  不过既然这是了读屏而优化的，那么可以用 media query 来完成，media speech 用于语音输出的读屏设备。
+  ```
+  @media speech {
+      /* media-specify rules */
+  }
+  ```
+
+  以上转自[Witcher42](http://witcher42.github.io/2014/06/06/what-are-the-different-ways-to-visually-hide-content-and-make-it-available-only-for-screen-readers/)给出的答案。
+
+* Q：你用过栅格系统吗？如果使用过，你最喜欢哪种？
+
+  A：使用过bootstarp。易于上手，学习成本低，还能做出比较大方美观的页面。
+
+  可阅读[栅格系统延续美学](http://mux.baidu.com/?p=1550)。
+
+* Q: 你用过媒体查询，或针对移动端的布局/CSS 吗？
+
+  A:
+
+  ```css
+    @media screen and (min-width:600px) {
+      nav {
+        float: left;
+        width: 25%;
+      }
+      section {
+        margin-left: 25%;
+      }
+    }
+    @media screen and (max-width:599px) {
+      nav li {
+        display: inline;
+      }
+    }
+  ```
+
+    可参考：
+    - [CSS媒体查询](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Media_queries)
+    - [使用 CSS 媒体查询创建响应式网站](http://www.ibm.com/developerworks/cn/web/wa-cssqueries/)
+* Q:你熟悉 SVG 样式的书写吗？
+
+  A:
+  ```html
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <circle cx="40" cy="40" r="24" style="stroke:#006600; fill:#00cc00"/>
+   <text x="250" y="150" font-family="Verdana" font-size="10px" fill="blue">Hello, out there</text>
+   <defs><style type="text/css"> <![CDATA[.sample{stroke:blue;fill:#0080FF;opacity:1;}]]></style></defs>
+   <use xlink:href="#sample1" class="sample"/>
+   </svg>
+  ```
+
+  教程参考: [SVG教程](https://developer.mozilla.org/zh-CN/docs/Web/SVG/Tutorial)
+
+* Q: 如何优化网页的打印样式？
+
+  A:
+
+  `<link rel="stylesheet" type="text/css" media="screen" href="xxx.css" />`
+
+ 其中media指定的属性就是设备，显示器上就是screen，打印机则是print，电视是tv，投影仪是projection。
+
+ `<link rel="stylesheet" type="text/css" media="print" href="yyy.css" />`
+
+ 但打印样式表也应有些注意事项：
+
+  1 打印样式表中最好不要用背景图片，因为打印机不能打印CSS中的背景。如要显示图片，请使用html插入到页面中。
+  2 最好不要使用像素作为单位，因为打印样式表要打印出来的会是实物，所以建议使用pt和cm。
+  3 隐藏掉不必要的内容。（`@print div{display:none;}`）
+  4 打印样式表中最好少用浮动属性，因为它们会消失。
+ 如果想要知道打印样式表的效果如何，直接在浏览器上选择打印预览就可以了。
+
+* Q: 书写高效 CSS 时会有哪些问题需要考虑？
+
+  A:
+  + 样式是：从右向左的解析一个选择器
+  + ID最快，Universal最慢 有四种类型的key selector，解析速度由快到慢依次是：ID、class、tag和universal
+  + 不要tag-qualify （永远不要这样做 ul#main-navigation { } ID已经是唯一的，不需要Tag来标识，这样做会让选择器变慢。）
+  + 后代选择器最糟糕（换句话说，下面这个选择器是很低效的： html body ul li a { }）
+  + 想清楚你为什么这样写
+  + CSS3的效率问题（CSS3选择器（比如 :nth-child）能够漂亮的定位我们想要的元素，又能保证我们的CSS整洁易读。但是这些神奇的选择器会浪费很多的浏览器资源。）
+  + 我们知道#ID速度是最快的，那么我们都用ID，是不是很快。但是我们不应该为了效率而牺牲可读性和可维护性`
+
+  可参考： <http://blog.jobbole.com/55067/>
+
+  等我重写这道题答案。=。=
+
+* 使用 CSS 预处理器的优缺点有哪些？(SASS，Compass，Stylus，LESS)
+  * 描述下你曾经使用过的 CSS 预处理的优缺点。
+
+* 如果设计中使用了非标准的字体，你该如何去实现？
+  * Webfonts (字体服务例如：Google Webfonts，Typekit 等等。)
+
+* 解释下浏览器是如何判断元素是否匹配某个 CSS 选择器？
+
+* 解释一下你对盒模型的理解，以及如何在 CSS 中告诉浏览器使用不同的盒模型来渲染你的布局。
+
+* 请解释一下 ```* { box-sizing: border-box; }``` 的作用, 并且说明使用它有什么好处？
+
+* 请罗列出你所知道的 display 属性的全部值
+
+* 请解释一下 inline 和 inline-block 的区别？
+
+* 请解释一下 relative、fixed、absolute 和 static 元素的区别
+
+* 你目前在使用哪一套CSS框架，或者在产品线上使用过哪一套？(Bootstrap, PureCSS, Foundation 等等)
+  * 如果有，请问是哪一套？如果可以，你如何改善CSS框架？
+
+* 请问你有使用过 CSS Flexbox 或者 Grid specs 吗？
+  * 如果有，请问在性能和效率的方面你是怎么看的？
+
